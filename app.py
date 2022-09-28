@@ -6,13 +6,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    config_query = "SELECT item, value FROM bookmark_config WHERE item = 'title';"
     get_query = "SELECT column_id, bookmark_order FROM bookmark_view ORDER BY column_id;"
+    ''' DB Connect '''
     db_conn = sqlite3.connect("db/nbookmark.db")
     db_cursor = db_conn.cursor()
     try:
         db_cursor.execute(get_query)
     except sqlite3.Error as db_error:
         return render_template('error.html', error_msg=' '.join(db_error.args))
+
+    ''' Fetch links from DB '''
     columns = {}
     records = db_cursor.fetchall()
     for row in records:
@@ -22,7 +26,10 @@ def index():
         items = db_cursor.fetchall()
         [columns[row[0]].update({_[0]: _[1]}) for _ in items]
 
-    return render_template('index.html', url_list=columns, title="Bookmarks")
+    db_cursor.execute(config_query)
+    config = db_cursor.fetchall()
+
+    return render_template('index.html', url_list=columns, title=config[0][0])
 
 
 if __name__ == '__main__':

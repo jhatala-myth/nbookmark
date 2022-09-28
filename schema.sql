@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS bookmark_view (
 );
 
 CREATE TABLE IF NOT EXISTS bookmark_config (
- title TEXT
+ item TEXT NOT NULL UNIQUE,
+ value TEXT NOT NULL
 );
