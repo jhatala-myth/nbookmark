@@ -22,7 +22,7 @@ def index():
         items = db_cursor.fetchall()
         [columns[row[0]].update({_[0]: _[1]}) for _ in items]
 
-    return render_template('index.html', url_list=columns)
+    return render_template('index.html', url_list=columns, title="Bookmarks")
 
 
 if __name__ == '__main__':
