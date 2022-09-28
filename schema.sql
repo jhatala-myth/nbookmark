@@ -6,5 +6,10 @@ CREATE TABLE IF NOT EXISTS bookmark_list (
 
 CREATE TABLE IF NOT EXISTS bookmark_view (
  column_id INTEGER CHECK (column_id < 5) NOT NULL UNIQUE,
+ column_title TEXT,
  bookmark_order TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS bookmark_config (
+ title TEXT
 );
