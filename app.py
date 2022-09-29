@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    config_query = "SELECT item, value FROM bookmark_config WHERE item = 'title';"
-    get_query = "SELECT column_id, bookmark_order FROM bookmark_view ORDER BY column_id;"
+    config_query = "SELECT value FROM bookmark_config WHERE item = 'title';"
+    get_query = "SELECT column_id, bookmark_order, column_title FROM bookmark_view ORDER BY column_id;"
     ''' DB Connect '''
     db_conn = sqlite3.connect("db/nbookmark.db")
     db_cursor = db_conn.cursor()
@@ -17,14 +17,18 @@ def index():
         return render_template('error.html', error_msg=' '.join(db_error.args))
 
     ''' Fetch links from DB '''
-    columns = {}
+    columns = []
     records = db_cursor.fetchall()
     for row in records:
-        columns[row[0]] = {}
+        '''
+            structure:
+            columns = [ {"title": "column_title", "links": { "bookmark_title": "bookmark_url", ...  }} ] 
+        '''
+        columns.append({"title": row[2], "links": {}})
         link_query = 'SELECT bookmark_title, bookmark_url FROM bookmark_list WHERE id IN ({})'.format(','.join(row[1].split(',')))
         db_cursor.execute(link_query)
         items = db_cursor.fetchall()
-        [columns[row[0]].update({_[0]: _[1]}) for _ in items]
+        [columns[len(columns)-1]["links"].update({_[0]: _[1]}) for _ in items]
 
     db_cursor.execute(config_query)
     config = db_cursor.fetchall()
