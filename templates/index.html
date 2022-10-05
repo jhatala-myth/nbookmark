@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <title>Bookmarks</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/jquery-3.6.1.min.js"></script>
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <style>
+    .table-row { cursor:pointer; }
+  </style>
+  <script>
+    $(document).ready(function($) {
+        $(".table-row").click(function() {
+            window.open($(this).data("href"), '_blank');
+        });
+    });
+  </script>
 </head>
 <body>
 <div class="bg-secondary p-3 text-white text-center">
@@ -16,7 +27,7 @@
   <div class="row">
   {%- for column in url_list %}
     <div class="col-md-4">
-      <table class="table table-hover">
+      <table class="table table-condensed table-striped table-hover">
       <thead class="table-success">
       <tr>
        <th>{{ column["title"] }}</th>
@@ -24,8 +35,8 @@
       </thead>
       <tbody>
       {%- for link in column["links"].keys() %}
-      <tr>
-        <td><a href="{{ column["links"][link] }}" target="_blank"> > {{ link }}</a> </td>
+      <tr class="table-row" data-href="{{ column["links"][link] }}" >
+        <td> > {{ link }} </td>
       </tr>
     {%- endfor %}
       </tbody>
