@@ -39,7 +39,6 @@ def index():
     if not result['status']:
         return render_template('error.html', error_msg=' '.join(result['data']))
 
-    print(len(result['data']))
     for row in result['data']:
         tabs.append({'tab_id': row['tab_index'], 'tab_title': row['tab_title'], 'columns': []})
         tab_index = len(tabs) - 1
