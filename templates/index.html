@@ -20,49 +20,45 @@
 </head>
 <body>
 <div class="bg-secondary p-3 text-white text-center">
-  <h2>{{ title }}</h2>
+  <h2>{{ data['title'] }}</h2>
 </div>
   <!-- Nav tabs -->
 <div class="container mt-5">
   <ul class="nav nav-tabs" role="tablist">
+    {%- for tab in data['tabs'] %}
     <li class="nav-item">
-      <a class="nav-link active" data-bs-toggle="tab" href="#home">Tab 1</a>
+      <a class="nav-link active" data-toggle="tab" href="#tabid_{{ tab['tab_id'] }}">{{ tab['tab_title']}}</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="tab" href="#menu1">Tab 2</a>
-    </li>
+    {%- endfor %}
   </ul>
 </div>
-  <!-- Tab panes -->
-  <div class="tab-content">
-
-    <div id="home" class="container tab-pane active">
-
-<div class="container mt-5">
-  <div class="row">
-  {%- for column in url_list %}
-    <div class="col-md-4">
-      <table class="table table-condensed table-striped table-hover">
-      <thead class="table-success">
-      <tr>
-       <th>{{ column["title"] }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      {%- for link in column["links"].keys() %}
-      <tr class="table-row" data-href="{{ column["links"][link] }}" >
-        <td> > {{ link }} </td>
-      </tr>
-    {%- endfor %}
-      </tbody>
-      </table>
+<div class="tab-content">
+<!-- Tab panels open -->
+  {%- for tab in data['tabs'] %}
+    <div class="container tab-pane active" id="tabid_{{ tab['tab_id'] }}">
+     <div class="container mt-5">
+       {%- for col in tab['columns'] %}
+       <div class="col-md-4">
+         <table class="table table-condensed table-striped table-hover">
+           <thead class="table-success">
+           <tr>
+             <th>{{ col['title'] }}</th>
+           </tr>
+           </thead>
+           <tbody>
+           {%- for link in col['links'].keys() %}
+           <tr class="table-row" data-href="{{ col['links'][link] }}">
+             <td>{{ link }}</td>
+           </tr>
+           {%- endfor %}
+           </tbody>
+         </table>
+       </div>
+       {%- endfor %}
      </div>
-  {%- endfor %}
-
-  </div>
-</div>
     </div>
-  <!-- Tab panes close -->
-  </div>
+  {%- endfor %}
+  <!-- Tab panels close -->
+</div>
 </body>
 </html>

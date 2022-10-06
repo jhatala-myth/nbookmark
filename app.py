@@ -58,7 +58,7 @@ def index():
             tabs[tab_index]['columns'][col_index]['links'].update({col['bookmark_title']: col['bookmark_url']})
 
     site_data['tabs'] = tabs
-    return render_template('index.html', url_list=site_data)
+    return render_template('index.html', data=site_data)
 
 
 if __name__ == '__main__':
