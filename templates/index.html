@@ -27,7 +27,7 @@
   <ul class="nav nav-tabs" role="tablist">
     {%- for tab in data['tabs'] %}
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#tabid_{{ tab['tab_id'] }}">{{ tab['tab_title']}}</a>
+      <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab" href="#tabid_{{ tab['tab_id'] }}">{{ tab['tab_title']}}</a>
     </li>
     {%- endfor %}
   </ul>
@@ -35,7 +35,7 @@
 <div class="tab-content">
 <!-- Tab panels open -->
   {%- for tab in data['tabs'] %}
-    <div class="container tab-pane active" id="tabid_{{ tab['tab_id'] }}">
+    <div class="container tab-pane {% if loop.first %}active{% else %}fade{% endif %}" id="tabid_{{ tab['tab_id'] }}">
      <div class="container mt-5">
        {%- for col in tab['columns'] %}
        <div class="col-md-4">
