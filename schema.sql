@@ -23,7 +23,3 @@ CREATE TABLE IF NOT EXISTS bookmark_config (
  value TEXT NOT NULL
 );
 
-INSERT OR IGNORE INTO bookmark_tab (tab_title) VALUES ('Tab #1');
-INSERT OR IGNORE INTO bookmark_list (bookmark_title, bookmark_url) VALUES ('Bookmark #1', 'https://github.com');
-INSERT OR IGNORE INTO bookmark_view VALUES (1, 1, 'Column #1', '1');
-INSERT OR IGNORE INTO bookmark_config VALUES ('title', 'nBookmark');

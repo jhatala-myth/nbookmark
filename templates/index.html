@@ -4,9 +4,17 @@
   <title>Bookmarks</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+-->
   <script src="/static/js/bootstrap.bundle.min.js"></script>
   <script src="/static/js/jquery-3.6.1.min.js"></script>
+  <script src="/static/js/popper-2.11.6.min.js"></script>
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
   <style>
     .table-row { cursor:pointer; }
   </style>
@@ -23,11 +31,11 @@
   <h2>{{ data['title'] }}</h2>
 </div>
   <!-- Nav tabs -->
-<div class="container mt-5">
+<div class="container pt-4">
   <ul class="nav nav-tabs" role="tablist">
     {%- for tab in data['tabs'] %}
-    <li class="nav-item">
-      <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab" href="#tabid_{{ tab['tab_id'] }}">{{ tab['tab_title']}}</a>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab" href="#tabid_{{ tab['tab_id'] }}">{{ tab['tab_title']}}</a>
     </li>
     {%- endfor %}
   </ul>
@@ -35,8 +43,9 @@
 <div class="tab-content">
 <!-- Tab panels open -->
   {%- for tab in data['tabs'] %}
-    <div class="container tab-pane {% if loop.first %}active{% else %}fade{% endif %}" id="tabid_{{ tab['tab_id'] }}">
-     <div class="container mt-5">
+    <div class="container pt-4 tab-pane {% if loop.first %}active show{% else %}fade{% endif %}" id="tabid_{{ tab['tab_id'] }}" role="tabpanel">
+       <!-- row open -->
+       <div class="row">
        {%- for col in tab['columns'] %}
        <div class="col-md-4">
          <table class="table table-condensed table-striped table-hover">
@@ -55,7 +64,8 @@
          </table>
        </div>
        {%- endfor %}
-     </div>
+      </div>
+      <!-- row close -->
     </div>
   {%- endfor %}
   <!-- Tab panels close -->

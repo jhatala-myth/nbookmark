@@ -38,10 +38,13 @@ def index():
     result = sql_query(db_cursor, get_query)
     if not result['status']:
         return render_template('error.html', error_msg=' '.join(result['data']))
-
+    tab_index_list = {}
     for row in result['data']:
-        tabs.append({'tab_id': row['tab_index'], 'tab_title': row['tab_title'], 'columns': []})
-        tab_index = len(tabs) - 1
+        if row['tab_index'] not in tab_index_list.keys():
+            tab_index_list[row['tab_index']] = len(tab_index_list)
+            tabs.append({'tab_id': row['tab_index'], 'tab_title': row['tab_title'], 'columns': []})
+
+        tab_index = tab_index_list[row['tab_index']]
         tabs[tab_index]['columns'].append({"title": row['column_title'], "links": {}})
 
         columns = sql_query(db_cursor, col_query.format(','.join(row['bookmark_order'].split(','))))
